@@ -1,0 +1,10 @@
+{
+	"name": "Chatroom",
+	"dependencies": {
+		"ejs": "latest",
+		"express": "latest",
+		"socket.io": "latest",
+		"body-parser": "latest",
+		"express-session": "latest"
+	}
+}

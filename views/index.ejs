@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Chatroom de Jens</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="/myCSS.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type ="text/javascript" src="/socket.io/socket.io.js"></script>
+	<script>
+	$(document).ready(function(){
+		var socket = io.connect();
+		socket.emit("new_chatter", {name: prompt("What's your username?")});
+		socket.on('chatter_added', function(data){
+			$('#active_chatters').append("<p id='"+data.socket_id+"'>"+data.chatter_added+"</p>");
+		});
+		socket.on('chatter_list', function(data){
+			for(ind in data){
+				$('#active_chatters').append("<p id='"+ind+"'>"+data[ind]+"</p>");
+			}
+		});
+		socket.on('chatted_deleted', function(data){
+			$('#'+data.chatter_id).remove();
+		});
+		$('button').click(function(){
+			event.preventDefault();
+			socket.emit('new_message', {message:$('#message_input').val()})
+			$('#message_input').val("");
+		});
+		socket.on('new_message', function(data){
+			$('.messageBox').append("<p id='other_user_message'>"+data.name+": "+data.message+"</p>");
+			$('.messageBox').scrollTop($('.messageBox')[0].scrollHeight);
+		});
+		socket.on('user_message', function(data){
+			$('.messageBox').append("<p id='user_message'>"+data.name+": "+data.message+"</p>");
+			$('.messageBox').scrollTop($('.messageBox')[0].scrollHeight);
+		});
+	});
+	</script>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<h1>Welcome Chatters</h1>
+			<div id="active_chatters"></div>
+			<div id="message box"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-4 messageBox">
+				
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-4">
+				<form>
+					<input id="message_input" type="text" class="form-control">
+					<button class="btn btn-primary">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

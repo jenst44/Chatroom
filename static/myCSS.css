@@ -1,0 +1,55 @@
+body {
+	text-align: center;
+	background-color: #FDA450;
+	color:#405c6d;
+}
+
+#active_chatters {
+	width:400px;
+	height: 100px;
+	margin: auto;
+	text-align: left;
+	overflow: auto;
+	font-size: 16px;
+}
+
+#active_chatters p {
+	display: inline-block;
+	margin-right: 20px;
+}
+
+.messageBox {
+	border: 1px solid #dd3a3a;
+	height: 500px;
+	overflow: auto;
+	text-align: left;
+	padding:20px;
+	border-radius: 5px;
+	font-size: 16px;
+}
+
+form {
+	text-align: right;
+	margin-top: 20px;
+}
+
+button {
+	margin-top: 10px;
+}
+
+#message_input {
+	background-color: #F6FECB;
+	color:#405c6d;
+}
+
+#other_user_message {
+	color:#405c6d;
+}
+
+#user_message {
+	color:#7d0804;
+}
+
+h1 {
+	color:#dd3a3a;
+}
